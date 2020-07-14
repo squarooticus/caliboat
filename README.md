@@ -35,6 +35,6 @@ make sudo
 
 ## Run Calibre
 
-If all is successful, you should have a script called `caliboat` that will instantiate the `caliboat` container and by default run `Calibre` inside the container. You may override this default by providing arguments to caliboat: for example, to start a shell in the container, run `./caliboat bash`.
+If all is successful, you should have a script called `caliboat` that will instantiate the `caliboat` container and by default run `calibre` inside the container. You may override this default by providing arguments to caliboat: for example, to start a shell in the container, run `./caliboat bash`.
 
 Once you have a running Dockerized Calibre, you will then need to configure DeDRM appropriately. Please refer to DeDRM's documentation for more information.

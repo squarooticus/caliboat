@@ -1,12 +1,12 @@
-# Caliboat: Dockerized Calibre
+# Caliboat: Dockerized Calibre for Linux
 
-Recent versions of Debian no longer package stable versions of Calibre that run atop Python 2. Unfortunately, many Calibre plugins have not kept pace, including DeDRM. This simple Dockerfile starts with Ubuntu 18.04, installs Calibre, and retrieves DeDRM 6.8.0.
+Recent versions of Debian no longer package stable versions of Calibre that run atop Python 2. Unfortunately, many Calibre plugins have not kept pace, including DeDRM. This simple Dockerfile starts with Ubuntu 18.04, installs Calibre, and retrieves DeDRM 6.8.0 for subsequent user configuration.
 
 ## Overview
 
 The build by default creates:
 
-* A Docker container image configured with a user/group combination configured with a UID/GID matching that of the user running the build on your host OS, with everything from the app subdirectory copied into /app in the container image.
+* A Docker container image configured with a user/group combination configured with a UID/GID matching that of the user running the build on your host OS, with everything from the `app/` subdirectory copied into `/app` in the container image.
 * A script called `caliboat` that will start containerized Calibre with volume mappings for your host user's:
     * X11 socket
     * Calibre library
@@ -19,7 +19,9 @@ Calibre state will thus persist across executions. If you wish, you can then add
 
 First, make sure you have a working Docker installation. Please do not ask me for help with this.
 
-Second, add any files you might need inside the container (such as your Kindle for PC encryption key) to the app/ subdirectory.
+Second, add any files you might need inside the container (such as your Kindle for PC encryption key) to the `app/` subdirectory.
+
+Third, check `VMAP` in the `Makefile` for any necessary changes to volume mappings.
 
 Then, if you are able to run docker as your non-root user, simply run:
 
@@ -33,7 +35,7 @@ Otherwise, run:
 make sudo
 ```
 
-## Run Calibre
+## Run
 
 If all is successful, you should have a script called `caliboat` that will instantiate the `caliboat` container and by default run `calibre` inside the container. You may override this default by providing arguments to caliboat: for example, to start a shell in the container, run `./caliboat bash`.
 

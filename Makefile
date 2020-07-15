@@ -37,7 +37,8 @@ $(TSFILE): Makefile Dockerfile
 
 $(SCRIPT): Makefile Dockerfile
 	echo '#! /bin/bash' >$(call quote-sh,$@)
-	echo $(call quote-sh,$(DOCKER) run -it -e DISPLAY=$$DISPLAY $(call unquote-spaces,$(addprefix -v$(space),$(foreach i,$(VMAP),$(call quote-sh,$i)))) $(call quote-sh,$(DOCKER_REPO)) "$$@") >>$(call quote-sh,$@)
+	echo $(call quote-sh,[ -t 1 ] && ARGS=-it) >>$(call quote-sh,$@)
+	echo $(call quote-sh,$(DOCKER) run $$ARGS -e DISPLAY=$$DISPLAY $(call unquote-spaces,$(addprefix -v$(space),$(foreach i,$(VMAP),$(call quote-sh,$i)))) $(call quote-sh,$(DOCKER_REPO)) "$$@") >>$(call quote-sh,$@)
 	chmod a+x $(call quote-sh,$@)
 
 clean:

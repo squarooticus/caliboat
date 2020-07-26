@@ -30,7 +30,7 @@ VMAP := /tmp/.X11-unix:/tmp/.X11-unix						\
 	$(HOME)/.config:/app/.config						\
 	$(call quote-spaces,$(HOME)/Calibre Library:/app/Calibre Library)	\
 	$(call quote-spaces,$(HOME)/My Kindle Content:/app/My Kindle Content)
-VMAP_NQ := $$TMPDIR:$$TMPDIR $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
+VMAP_NQ := "$$TMPDIR:$$TMPDIR" "$$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR"
 ENV_CP := DISPLAY TMPDIR XDG_RUNTIME_DIR
 ADD_PACKAGES :=
 
@@ -53,7 +53,7 @@ $(SCRIPT): Makefile Dockerfile
 	echo '#! /bin/bash' >$(call maybe-quote-sh,$@)
 	echo $(call maybe-quote-sh,[ -t 1 ] && ARGS=-it) >>$(call maybe-quote-sh,$@)
 	echo $(call maybe-quote-sh,$(DOCKER) run $$ARGS \\$(nl)						\
-		$(foreach i,$(ENV_CP),-e $i=$$$i \\$(nl))						\
+		$(foreach i,$(ENV_CP),-e $i="$$$i" \\$(nl))						\
 		$(foreach i,$(VMAP),-v $(call maybe-quote-sh,$(call unquote-spaces,$i)) \\$(nl))	\
 		$(foreach i,$(VMAP_NQ),-v $(call unquote-spaces,$i) \\$(nl))				\
 		$(call maybe-quote-sh,$(DOCKER_REPO)) "$$@") >>$(call maybe-quote-sh,$@)
